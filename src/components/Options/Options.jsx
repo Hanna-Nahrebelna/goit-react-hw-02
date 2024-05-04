@@ -2,25 +2,17 @@
 // import css from "./Options.module.css"
 
 
-export default function Options() {
-  
-  // const [clicks, setClicks] = useState(0);
-    
-  // const handleClick = () => {
-  //   setClicks(clicks + 1);
-  // }
-
-  // const handleReset = () => {
-  //   setClicks(0);
-  // }
+const Options = ({updateFeedback}) => {    
 
   return (
     <div>
-      <button>Good</button>
-      <button>Neutral</button>
-      <button>Bad</button>
+      <button onClick={() => updateFeedback('good')}>Good</button>
+      <button onClick={() => updateFeedback('neutral')}>Neutral</button>
+      <button onClick={() => updateFeedback('bad')}>Bad</button>
       <button>Reset</button>
     </div>
-
   );
 }
+
+
+export default Options
