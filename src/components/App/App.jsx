@@ -8,14 +8,17 @@ import css from "./App.module.css"
 
 
 const App = () => {
-  const [feedback, setFeedback] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
+  const [feedback, setFeedback] = useState(() => {
+    const savedFeedback = localStorage.getItem("feedback");
+    return savedFeedback !== null ? JSON.parse(savedFeedback) : { good: 0, neutral: 0, bad: 0 };
   });
 
+  useEffect(() => { 
+    localStorage.setItem('my-feedback', JSON.stringify(feedback))
+  }, [feedback])
+
   useEffect(() => {
-    console.log(feedback);
+    console.log('feedback cleanup');
   }, [feedback])
 
   const updateFeedback = (feedbackType) => {
