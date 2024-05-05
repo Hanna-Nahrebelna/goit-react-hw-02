@@ -15,11 +15,9 @@ const App = () => {
 
   useEffect(() => { 
     localStorage.setItem('my-feedback', JSON.stringify(feedback))
-  }, [feedback])
-
-  useEffect(() => {
     console.log('feedback cleanup');
   }, [feedback])
+  
 
   const updateFeedback = (feedbackType) => {
     setFeedback(prevFeedback => {
