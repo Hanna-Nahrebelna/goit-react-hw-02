@@ -11,7 +11,13 @@ export default function App() {
   const [feedback, setFeedback] = useState(() => {
     const savedFeedback = localStorage.getItem("feedback");
     return savedFeedback !== null ? JSON.parse(savedFeedback) : { good: 0, neutral: 0, bad: 0 };
-  });
+  }); 
+  
+  const [isVisible, setIsVisible] = useState(false);  
+
+  const handleToggle = () => {
+    setIsVisible(!isVisible)
+  }
 
   useEffect(() => { 
     localStorage.setItem('feedback', JSON.stringify(feedback))
@@ -20,6 +26,7 @@ export default function App() {
   
 
   const updateFeedback = (feedbackType) => {
+    setIsVisible(true);
     setFeedback(prevFeedback => {
       const updateClick = { ...prevFeedback };
       updateClick[feedbackType] += 1;
@@ -28,6 +35,7 @@ export default function App() {
   };
 
   const handleReset = () => {
+    setIsVisible(false);
     setFeedback({ good: 0, neutral: 0, bad: 0 });
   };
 
@@ -37,9 +45,16 @@ export default function App() {
   return (
     <div className={css.container}>
       <Description />
-      <Options updateFeedback={updateFeedback} handleReset={handleReset} />
+      <Options
+        updateFeedback={updateFeedback}
+        handleReset={handleReset}
+        handleToggle={handleToggle}
+      />
+      {isVisible ? (
       <Feedback feedback={feedback} totalFeedback={totalFeedback} />
-      <Notification />  
+      ) : (
+        <Notification handleToggle={handleToggle} />
+    )}
     </div>   
   );
 }

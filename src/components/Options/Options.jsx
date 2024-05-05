@@ -1,14 +1,12 @@
-// import css from "./Options.module.css"
+import css from "./Options.module.css"
 
-
-const Options = ({updateFeedback, handleReset}) => {    
-
+const Options = ({ updateFeedback, handleReset }) => { 
   return (
     <div>
-      <button onClick={() => updateFeedback('good')}>Good</button>
-      <button onClick={() => updateFeedback('neutral')}>Neutral</button>
-      <button onClick={() => updateFeedback('bad')}>Bad</button>
-      <button onClick={handleReset}>Reset</button>
+      <button className={css.optionsButton} onClick={() => updateFeedback('good')}>Good</button>
+      <button className={css.optionsButton} onClick={() => updateFeedback('neutral')}>Neutral</button>
+      <button className={css.optionsButton} onClick={() => updateFeedback('bad')}>Bad</button>
+      <button className={css.optionsButton} onClick={handleReset}>Reset</button>
     </div>
   );
 }

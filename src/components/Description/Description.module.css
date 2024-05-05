@@ -1,10 +1,20 @@
 .title {
+  margin: 0;
+  font-family: "Raleway", sans-serif;
   font-size: 50px;
   color: black;
 }
 
 .titleSpan {
   color: rgb(27, 244, 7);
+}
+
+.description {
+  margin: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-family: "Raleway", sans-serif;
+  font-size: 20px;
 }
 
 .descriptionSpan {
