@@ -1,7 +1,7 @@
 import css from "./Feedback.module.css"
 
 
-const Feedback = ({ feedback, totalFeedbackState, positiveFeedback }) => {   
+const Feedback = ({ feedback, totalFeedback, positiveFeedback }) => {   
 
   return (
     <div>
@@ -9,7 +9,7 @@ const Feedback = ({ feedback, totalFeedbackState, positiveFeedback }) => {
         <li>Good: {feedback.good}</li>
         <li>Neutral: {feedback.neutral}</li>
         <li>Bad: {feedback.bad}</li>
-        <li>Total: {totalFeedbackState}</li>
+        <li>Total: {totalFeedback}</li>
         <li>Positive: {positiveFeedback} %</li>
       </ul>
     </div>

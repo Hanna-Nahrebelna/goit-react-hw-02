@@ -13,20 +13,13 @@ export default function App() {
     return savedFeedback !== null ? JSON.parse(savedFeedback) : { good: 0, neutral: 0, bad: 0 };
   }); 
   
-  const [positiveFeedback, setPositiveFeedback] = useState(0);
-  const [totalFeedbackState, setTotalFeedbackState] = useState(0);
-
-  useEffect(() => { 
-    localStorage.setItem('feedback', JSON.stringify(feedback))
-    const total = feedback.good + feedback.neutral + feedback.bad;
-    const positive = Math.round((feedback.good / total) * 100);
-    setPositiveFeedback(positive || 0);
-    setTotalFeedbackState(total > 0);
-    if (total === 0) {
-      setTotalFeedbackState(0);
-    }
-  }, [feedback])
   
+  useEffect(() => { 
+    localStorage.setItem('feedback', JSON.stringify(feedback))    
+  }, [feedback])
+
+  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
+  const positiveFeedback = totalFeedback > 0 ? Math.round((feedback.good / totalFeedback) * 100) : 0;  
 
   const updateFeedback = (feedbackType) => {    
     setFeedback(prevFeedback => {
@@ -38,9 +31,7 @@ export default function App() {
 
   const handleReset = () => {
     setFeedback({ good: 0, neutral: 0, bad: 0 });
-    setTotalFeedbackState(0);
   };
-
    
   return (
     <div className={css.container}>
@@ -49,20 +40,18 @@ export default function App() {
       <Options
         updateFeedback={updateFeedback}
         handleReset={handleReset}
-        totalFeedbackProp={totalFeedbackState}
+        totalFeedback={totalFeedback}
       />
 
-      {totalFeedbackState === 0 ? (
+      {totalFeedback === 0 ? (
         <Notification />
       ) : (
         <Feedback
           feedback={feedback}
-          totalFeedback={totalFeedbackState}
+          totalFeedback={totalFeedback}
           positiveFeedback={positiveFeedback}
         />
-      )}
-
-      
+      )}      
     </div>   
   );
 }
