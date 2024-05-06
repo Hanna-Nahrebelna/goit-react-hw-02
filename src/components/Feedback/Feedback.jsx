@@ -1,9 +1,7 @@
 import css from "./Feedback.module.css"
 
 
-const Feedback = ({ feedback, totalFeedback }) => {
-  
-  const positiveFeedback = Math.round((feedback.good / totalFeedback) * 100);  
+const Feedback = ({ feedback, totalFeedbackState, positiveFeedback }) => {   
 
   return (
     <div>
@@ -11,7 +9,7 @@ const Feedback = ({ feedback, totalFeedback }) => {
         <li>Good: {feedback.good}</li>
         <li>Neutral: {feedback.neutral}</li>
         <li>Bad: {feedback.bad}</li>
-        <li>Total: {totalFeedback}</li>
+        <li>Total: {totalFeedbackState}</li>
         <li>Positive: {positiveFeedback} %</li>
       </ul>
     </div>

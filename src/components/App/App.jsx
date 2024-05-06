@@ -13,48 +13,56 @@ export default function App() {
     return savedFeedback !== null ? JSON.parse(savedFeedback) : { good: 0, neutral: 0, bad: 0 };
   }); 
   
-  const [isVisible, setIsVisible] = useState(false);  
-
-  const handleToggle = () => {
-    setIsVisible(!isVisible)
-  }
+  const [positiveFeedback, setPositiveFeedback] = useState(0);
+  const [totalFeedbackState, setTotalFeedbackState] = useState(0);
 
   useEffect(() => { 
     localStorage.setItem('feedback', JSON.stringify(feedback))
-    console.log('feedback cleanup');
+    const total = feedback.good + feedback.neutral + feedback.bad;
+    const positive = Math.round((feedback.good / total) * 100);
+    setPositiveFeedback(positive || 0);
+    setTotalFeedbackState(total > 0);
+    if (total === 0) {
+      setTotalFeedbackState(0);
+    }
   }, [feedback])
   
 
-  const updateFeedback = (feedbackType) => {
-    setIsVisible(true);
+  const updateFeedback = (feedbackType) => {    
     setFeedback(prevFeedback => {
       const updateClick = { ...prevFeedback };
       updateClick[feedbackType] += 1;
       return updateClick;
-      });
+    });    
   };
 
   const handleReset = () => {
-    setIsVisible(false);
     setFeedback({ good: 0, neutral: 0, bad: 0 });
+    setTotalFeedbackState(0);
   };
 
-  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-  console.log(totalFeedback);
-    
+   
   return (
     <div className={css.container}>
       <Description />
+
       <Options
         updateFeedback={updateFeedback}
         handleReset={handleReset}
-        handleToggle={handleToggle}
+        totalFeedbackProp={totalFeedbackState}
       />
-      {isVisible ? (
-      <Feedback feedback={feedback} totalFeedback={totalFeedback} />
+
+      {totalFeedbackState === 0 ? (
+        <Notification />
       ) : (
-        <Notification handleToggle={handleToggle} />
-    )}
+        <Feedback
+          feedback={feedback}
+          totalFeedback={totalFeedbackState}
+          positiveFeedback={positiveFeedback}
+        />
+      )}
+
+      
     </div>   
   );
 }
